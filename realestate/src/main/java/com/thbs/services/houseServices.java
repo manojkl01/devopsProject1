@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import com.thbs.models.house;
 
 import antlr.collections.List;
-
+//asdfgfredfcd
 @Service
 public interface houseServices  {
 
