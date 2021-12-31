@@ -21,8 +21,8 @@ public class houseServiceImpl implements houseServices {
 	HouseRepository houseRepository;
 	
 	@Override
-	public void saveEmployee(house h) {
-		this.houseRepository.save(h);
+	public void saveEmployee(house house) {
+		this.houseRepository.save(house);
 		
 	}
 	@Override

@@ -19,13 +19,15 @@ import com.thbs.services.houseServiceImpl;
 public class AdminController {
 	@Autowired
 	houseServiceImpl houseService;
-	
+
 	// display list of employees
 	@GetMapping("/homepage")
 	public String viewHomePage(Model model) {
-		 return findPaginated(1, "pid", "asc", model);
+		List<house> listProducts = houseService.getAllEmployees();
+		model.addAttribute("listProducts", listProducts);
+		return "index1";
 	}
-	
+
 	@GetMapping("/showNewEmployeeForm")
 	public String showNewEmployeeForm(Model model) {
 		// create model attribute to bind form data
@@ -33,49 +35,27 @@ public class AdminController {
 		model.addAttribute("house", house);
 		return "new_employee";
 	}
-	
+
 	@PostMapping("/saveEmployee")
-	public String saveEmployee(@ModelAttribute("house") house h) {
+	public String saveEmployee(@ModelAttribute("house") house house) {
 		// save employee to database
-		houseService.saveEmployee(h);
+		houseService.saveEmployee(house);
 		return "redirect:/homepage";
 	}
-	
+
 	@GetMapping("/showFormForUpdate/{pid}")
-	public String showFormForUpdate(@PathVariable ( value = "id") int pid, Model model) {
-		house h = houseService.getEmployeeById(pid);
-		model.addAttribute("house", h);
+	public String showFormForUpdate(@PathVariable(value = "pid") int pid, Model model) {
+		house house = houseService.getEmployeeById(pid);
+		model.addAttribute("house", house);
 		return "update_employee";
 	}
-	
+
 	@GetMapping("/deleteEmployee/{pid}")
-	public String deleteEmployee(@PathVariable (value = "pid") int pid) {
-		
-		// call delete employee method 
+	public String deleteEmployee(@PathVariable(value = "pid") int pid) {
+
+		// call delete employee method
 		this.houseService.deleteEmployeeById(pid);
 		return "redirect:/homepage";
 	}
-	@GetMapping("/page/{pageNo}")
-	public String findPaginated(@PathVariable (value = "pageNo") int pageNo, 
-			@RequestParam("sortField") String sortField,
-			@RequestParam("sortDir") String sortDir,
-			Model model) {
-		int pageSize = 5;
-		
-		Page<house> page = houseService.findPaginated(pageNo, pageSize, sortField, sortDir);
-		List<house> listEmployees = page.getContent();
-		
-		model.addAttribute("currentPage", pageNo);
-		model.addAttribute("totalPages", page.getTotalPages());
-		model.addAttribute("totalItems", page.getTotalElements());
-		
-		model.addAttribute("sortField", sortField);
-		model.addAttribute("sortDir", sortDir);
-		model.addAttribute("reverseSortDir", sortDir.equals("asc") ? "desc" : "asc");
-		
-		model.addAttribute("listEmployees", listEmployees);
-		return "index1";
-	}
-	
 
 }

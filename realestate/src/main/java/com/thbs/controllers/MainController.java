@@ -1,9 +1,11 @@
 package com.thbs.controllers;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,8 +17,8 @@ import com.thbs.models.house;
 import com.thbs.repo.AdminRepository;
 import com.thbs.repo.HouseRepository;
 import com.thbs.repo.UserRepository;
+import com.thbs.services.houseServices;
 
-import antlr.collections.List;
 
 @Controller
 public class MainController {
@@ -26,13 +28,20 @@ public class MainController {
 	AdminRepository adminRepository;
 	@Autowired
 	HouseRepository houseRepository;
+	@Autowired
+	houseServices houseService;
 	
 
 	@RequestMapping(value = "/")
 	public String index() {
 		return "property-detail";
 	}
+	@RequestMapping(value = "/contact")
+	public String contact() {
+		return "contact";
+	}
     
+	
 	@RequestMapping(value = "/user")
 	public String user() {
 		return "index";
@@ -102,7 +111,7 @@ public class MainController {
 		
 		
 		@PostMapping("/admincheck")
-		public String admin(@ModelAttribute("admin") Admin a) 
+		public String admin(@ModelAttribute("admin") Admin a, Model model) 
 		{
 			Optional<Admin> searchUser =adminRepository.findById(a.getAdminid());
 			 if (searchUser.isPresent())
@@ -110,6 +119,8 @@ public class MainController {
 				 Admin userFromDb = searchUser.get();	 
 			 if (a.getPassword().equals(userFromDb.getPassword()))
 			 {  
+				 List<house> listProducts = houseService.getAllEmployees();
+					model.addAttribute("listProducts", listProducts);
 			 return "index1.html";
 			 }
 			 else

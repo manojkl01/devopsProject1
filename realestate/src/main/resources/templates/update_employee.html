@@ -17,7 +17,7 @@
 			method="POST">
 			
 			<!-- Add hidden form field to handle update -->
-			<input type="number" th:field="*{pid}" />
+			<input type="text" th:field="*{pid}" readonly="readonly" />
 			
 			<input type="text" th:field="*{address}" class="form-control mb-4 col-4">
 				
@@ -26,7 +26,6 @@
 				<input type="number" th:field="*{bathrooms}" class="form-control mb-4 col-4">
 				<input type="number" th:field="*{size_sqft}" class="form-control mb-4 col-4">
 				<input type="number" th:field="*{price}" class="form-control mb-4 col-4">
-				<input type="text" th:field="*{ownername}" class="form-control mb-4 col-4">
 				<input type="text" th:field="*{ownercontactnumber}" class="form-control mb-4 col-4">
 				
 				<button type="submit" class="btn btn-info col-2"> Update House</button>
@@ -34,7 +33,7 @@
 		
 		<hr>
 		
-		<a th:href = "@{/}"> Back to House List</a>
+		<a th:href = "@{/homepage}"> Back to House List</a>
 	</div>
 </body>
 </html>

@@ -17,54 +17,27 @@
 	
 	<a th:href = "@{/showNewEmployeeForm}" class="btn btn-primary btn-sm mb-3"> Add House </a>
 	
-		<table border="1" class = "table table-striped table-responsive-md">
+		<table border="1"  class = "table table-striped table-responsive-md" >
 			<thead>
 				<tr>
-					<th>
-						<a th:href="@{'/page/' + ${currentPage} + '?sortField=pid&sortDir=' + ${reverseSortDir}}">
-							House property Id</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=address&sortDir=' + ${reverseSortDir}}">
-							House property Address</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=ownername&sortDir=' + ${reverseSortDir}}">
-							OwnerName</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=bedrooms&sortDir=' + ${reverseSortDir}}">
-							Bedrooms</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=bathrooms&sortDir=' + ${reverseSortDir}}">
-							Bathrooms</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=size_sqft&sortDir=' + ${reverseSortDir}}">
-							Size_in_sqft</a>
-					</th>
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=price&sortDir=' + ${reverseSortDir}}">
-							Price</a>
-					</th>
-				
-					<th>
-					<a th:href="@{'/page/' + ${currentPage} + '?sortField=ownercontactnumber&sortDir=' + ${reverseSortDir}}">
-							ContactNumber</a>
-					</th>
+					<th>PropertyId</th>
+					<th>Address</th>
+					<th>Bedrooms</th>
+					<th>Bathrooms</th>
+					<th>Size_sqft</th>
+					<th>Price</th>
+					<th>contactNumber</th>
 					<th> Actions </th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="house : ${listEmployees}">
+				<tr th:each="house : ${listProducts}">
 					<td th:text="${house.pid}"></td>
 					<td th:text="${house.address}"></td>
-					<td th:text="${house.ownername}"></td>
-					<td th:number="${house.bedrooms}"></td>
-					<td th:number="${house.bathrooms}"></td>
-					<td th:number="${house.size_sqft}"></td>
-					<td th:number="${house.price}"></td>
+					<td th:text="${house.bedrooms}"></td>
+					<td th:text="${house.bathrooms}"></td>
+					<td th:text="${house.size_sqft}"></td>
+					<td th:text="${house.price}"></td>
 					<td th:text="${house.ownercontactnumber}"></td>
 					
 					<td> <a th:href="@{/showFormForUpdate/{pid}(pid=${house.pid})}" class="btn btn-primary">Update</a>
@@ -73,29 +46,8 @@
 				</tr>
 			</tbody>
 		</table>
-		
-		<div th:if = "${totalPages > 1}">
-			<div class = "row col-sm-10">
-				<div class = "col-sm-2">
-					Total Rows: [[${totalItems}]] 
-				</div>
-				<div class = "col-sm-1">
-					<span th:each="i: ${#numbers.sequence(1, totalPages)}">
-						<a th:if="${currentPage != i}" th:href="@{'/page/' + ${i}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">[[${i}]]</a>
-						<span th:unless="${currentPage != i}">[[${i}]]</span>  &nbsp; &nbsp;
-					</span>
-				</div>
-				<div class = "col-sm-1">
-					<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${currentPage + 1}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Next</a>
-					<span th:unless="${currentPage < totalPages}">Next</span>
-				</div>
-				
-				 <div class="col-sm-1">
-    				<a th:if="${currentPage < totalPages}" th:href="@{'/page/' + ${totalPages}+ '?sortField=' + ${sortField} + '&sortDir=' + ${sortDir}}">Last</a>
-					<span th:unless="${currentPage < totalPages}">Last</span>
-   				 </div>
-			</div>
-		</div>
+		<br>
+		<a th:href="@{/}" class="btn btn-primary">Home</a>
 	</div>
 </body>
 </html>
