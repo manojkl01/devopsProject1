@@ -1,142 +1,59 @@
 package com.thbs.controllers;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import com.thbs.models.Admin;
-import com.thbs.models.User;
-import com.thbs.models.house;
-import com.thbs.repo.AdminRepository;
-import com.thbs.repo.HouseRepository;
-import com.thbs.repo.UserRepository;
-import com.thbs.services.houseServices;
-
+import com.thbs.constantProperties.Constants;
 
 @Controller
 public class MainController {
-	@Autowired
-	UserRepository userRepository;
-	@Autowired
-	AdminRepository adminRepository;
-	@Autowired
-	HouseRepository houseRepository;
-	@Autowired
-	houseServices houseService;
-	
 
-	@RequestMapping(value = "/")
+	@RequestMapping(value = Constants.LANDING_PAGE)
 	public String index() {
 		return "property-detail";
 	}
-	@RequestMapping(value = "/contact")
+
+	@RequestMapping(value = Constants.CONTACT_PAGE)
 	public String contact() {
 		return "contact";
 	}
-    
-	
-	@RequestMapping(value = "/user")
+
+	@RequestMapping(value = Constants.USERLOGIN_PAGE)
 	public String user() {
 		return "index";
 	}
-	@RequestMapping(value = "/userRegister")
+
+	@RequestMapping(value = Constants.USERREGISTER_PAGE)
 	public String userRegister() {
 		return "register";
 	}
-	@RequestMapping(value = "/about")
+
+	@RequestMapping(value = Constants.ABOUT)
 	public String about() {
 		return "about";
 	}
-	
-	@RequestMapping(value = "/estate_details")
+
+	@RequestMapping(value = Constants.ESTATEDETAILS_PAGE)
 	public String estate() {
 		return "estate_details";
 	}
-	
-	
-	@PostMapping(value="/register")
-	public String registerUser(@ModelAttribute("user") User user) {
-		// TODO Auto-generated method stub
-		Optional<User> searchUser = userRepository.findById(user.getUsername());
-		if (searchUser.isPresent()) {
-			User userFound = searchUser.get();
-			return "sameusername";
 
-		} else {
-			/* user.setPassword(user.getPassword()); */
-			User saveUser = userRepository.save(user);
-			return "index";
-		}
+	/*
+	 * Admin options
+	 */
+
+	@RequestMapping(value = Constants.ADMIN_OPERATION_PAGE)
+	public String admin_options() {
+		return "admin_options";
 	}
-		 
-		@PostMapping("/login")
-		public String loginUser(@ModelAttribute("user") User u)
-		{
-			Optional<User> searchUser =userRepository.findById(u.getUsername());
-			 if (searchUser.isPresent())
-			 { User userFromDb = searchUser.get();
-			 if (u.getPassword().equals(userFromDb.getPassword()))
-			 {  
-			 return "estate_details";
-			 } else
-			 { 
-				 return "invalid";
-			 }
-			 
-			 } else return "invalid"; 
-		}
+
+	@RequestMapping(value = Constants.ADMIN_LOGIN_PAGE)
+	public String admin_login() {
+		return "admin";
+	}
 	
-		//admin
-		
-		
-		 @RequestMapping(value = "/admin_options")
-		 public String admin_options()
-		 {
-		 return "admin_options"; 
-		 }
-		  
-		 @RequestMapping(value = "/admin_login")
-		 public String admin_login() 
-		 { 
-			 return "admin"; 
-		 }
-		 
-		
-		
-		@PostMapping("/admincheck")
-		public String admin(@ModelAttribute("admin") Admin a, Model model) 
-		{
-			Optional<Admin> searchUser =adminRepository.findById(a.getAdminid());
-			 if (searchUser.isPresent())
-			 { 
-				 Admin userFromDb = searchUser.get();	 
-			 if (a.getPassword().equals(userFromDb.getPassword()))
-			 {  
-				 List<house> listProducts = houseService.getAllEmployees();
-					model.addAttribute("listProducts", listProducts);
-			 return "index1.html";
-			 }
-			 else
-			 { 
-				 return "admin";
-			 } 
-			 } 
-			 else {
-				 return "admin"; 
-			 }
-		}
-	@GetMapping("/getAllHouses")	
-	public String viewallhouses(@ModelAttribute("house") house h)
-	{
-		return null;
-		
+	@RequestMapping(value = "/update")
+	public String updateProperty() {
+		return "update_employee";
 	}
-		   
+
 }
