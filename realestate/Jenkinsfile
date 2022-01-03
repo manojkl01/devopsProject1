@@ -18,7 +18,7 @@ pipeline {
                    [
                         artifactId: 'th1',
                        classifier: '',
-                       file: 'target/realestate-0.0.1-SNAPSHOT.jar',
+                       file: 'realestate/target/realestate-0.0.1-SNAPSHOT.jar',
                       type: 'jar'
                  ]
              ],
