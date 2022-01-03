@@ -11,5 +11,26 @@ pipeline {
                 echo "Building ${env.project1}..."
             }
         }
+        
+        stage('Upload War To Nexus'){
+            steps{
+                nexusArtifactUploader artifacts:[
+                   [
+                        artifactId: 'th1',
+                       classifier: '',
+                       file: '/var/lib/jenkins/jobs/project1/config.xml',
+                      type: 'war'
+                 ]
+             ],
+                   credentialsId: '73497722-8b4b-46b2-99d2-cf525eb9978e',
+                   groupId: 'th1',
+                   nexusUrl: '3.133.254.46:8081/',
+                   nexusVersion: 'nexus3',
+                   protocol: 'http',
+                   repository: 'maven-snapshots',
+                   version: '1.0'
+  
+            }
+        }
     }
 }
