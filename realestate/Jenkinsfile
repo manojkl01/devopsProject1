@@ -19,7 +19,7 @@ pipeline {
                         artifactId: 'th1',
                        classifier: '',
                        file: '/var/lib/jenkins/jobs/project1/config.xml',
-                      type: 'war'
+                      type: 'jar'
                  ]
              ],
                    credentialsId: '73497722-8b4b-46b2-99d2-cf525eb9978e',
